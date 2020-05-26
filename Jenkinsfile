@@ -18,7 +18,8 @@ spec:
     stage('Build and test') {
     checkout scm
       container('rust') {
-        sh 'cargo build --release'
+        sh 'cargo test'
+        sh 'cargo test build --release'
       }
     }
   }
