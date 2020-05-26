@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
   - name: rust
-    image: rust:alpine
+    image: rust:1.43-stretch
     command:
     - cat
     tty: true
