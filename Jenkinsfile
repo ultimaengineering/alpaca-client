@@ -19,7 +19,7 @@ spec:
     checkout scm
       container('rust') {
         sh 'cargo test'
-        sh 'cargo test build --release'
+        sh 'cargo build --release'
       }
     }
   }

@@ -7,7 +7,7 @@ mod tests {
     use std::borrow::Borrow;
 
     #[test]
-    fn test_accounts_serialization() {
+    fn accounts_serialization() {
         let data = r#"{
               "account_blocked": "False",
               "account_number": "010203ABCD",
@@ -62,10 +62,11 @@ mod tests {
         assert_eq!(&deserialized.trade_suspended_by_user, "False");
         assert_eq!(&deserialized.trading_blocked, "False");
         assert_eq!(&deserialized.transfers_blocked, "False");
+        print!("{:?}", deserialized);
     }
 
     #[test]
-    fn test_order_serialization() {
+    fn order_serialization() {
         let data = r#" {
           "id": "904837e3-3b76-47ec-b432-046db621571b",
           "client_order_id": "904837e3-3b76-47ec-b432-046db621571b",
@@ -112,5 +113,13 @@ mod tests {
         assert_eq!(&deserialized.filled_avg_price, Decimal::from_str("106").unwrap().borrow());
         assert_eq!(&deserialized.status, "accepted");
         assert_eq!(&deserialized.extended_hours, &false);
+        print!("{:?}", deserialized);
+    }
+
+    #[test]
+    fn test_order_serialization() {
+        let data = r#" {
+
+        }"#;
     }
 }
