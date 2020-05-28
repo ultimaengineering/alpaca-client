@@ -1,3 +1,3 @@
 pub mod account;
-mod orders;
+pub mod order;
 use serde::{Serialize, Deserialize};

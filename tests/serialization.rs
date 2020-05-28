@@ -2,9 +2,11 @@ extern crate alpaca_client;
 #[cfg(test)]
 mod tests {
     use alpaca_client::account;
+    use alpaca_client::order;
     use rust_decimal::prelude::*;
     use std::borrow::Borrow;
     use chrono::{DateTime, Utc};
+    use std::io::empty;
 
     #[test]
     fn test_accounts_serialization() {
@@ -62,5 +64,55 @@ mod tests {
         assert_eq!(&deserialized.trade_suspended_by_user, "False");
         assert_eq!(&deserialized.trading_blocked, "False");
         assert_eq!(&deserialized.transfers_blocked, "False");
+    }
+
+    #[test]
+    fn test_order_serialization() {
+        let data = r#" {
+          "id": "904837e3-3b76-47ec-b432-046db621571b",
+          "client_order_id": "904837e3-3b76-47ec-b432-046db621571b",
+          "created_at": "2018-10-05T05:48:59Z",
+          "updated_at": "2018-10-05T05:48:59Z",
+          "submitted_at": "2018-10-05T05:48:59Z",
+          "filled_at": "2018-10-05T05:48:59Z",
+          "expired_at": "2018-10-05T05:48:59Z",
+          "canceled_at": "2018-10-05T05:48:59Z",
+          "failed_at": "2018-10-05T05:48:59Z",
+          "replaced_at": "2018-10-05T05:48:59Z",
+          "replaced_by": "904837e3-3b76-47ec-b432-046db621571b",
+          "replaces": null,
+          "asset_id": "904837e3-3b76-47ec-b432-046db621571b",
+          "symbol": "AAPL",
+          "asset_class": "us_equity",
+          "qty": "15",
+          "filled_qty": "0",
+          "type": "market",
+          "side": "buy",
+          "time_in_force": "day",
+          "limit_price": "107.00",
+          "stop_price": "106.00",
+          "filled_avg_price": "106.00",
+          "status": "accepted",
+          "extended_hours": false,
+          "legs": null
+        }
+        "#;
+        let deserialized: order::Order = serde_json::from_str(&data).unwrap();
+        let optional_uuid = std::option::Option::Some(uuid::Uuid::from_str("904837e3-3b76-47ec-b432-046db621571b").unwrap().borrow());
+        let uuid = uuid::Uuid::from_str("904837e3-3b76-47ec-b432-046db621571b").unwrap();
+        assert_eq!(&deserialized.id, uuid.borrow());
+        assert_eq!(&deserialized.client_order_id, uuid.borrow());
+        assert_eq!(&deserialized.asset_id, uuid.borrow());
+        assert_eq!(&deserialized.asset_class, "us_equity");
+        assert_eq!(&deserialized.symbol, "AAPL");
+        assert_eq!(&deserialized.limit_price, Decimal::from_str("107").unwrap().borrow());
+        assert_eq!(&deserialized.qty, "15");
+        assert_eq!(&deserialized.filled_qty, "0");
+        assert_eq!(&deserialized.side, "buy");
+        assert_eq!(&deserialized.time_in_force, "day");
+        assert_eq!(&deserialized.stop_price, Decimal::from_str("106").unwrap().borrow());
+        assert_eq!(&deserialized.filled_avg_price, Decimal::from_str("106").unwrap().borrow());
+        assert_eq!(&deserialized.status, "accepted");
+        assert_eq!(&deserialized.extended_hours, &false);
     }
 }
