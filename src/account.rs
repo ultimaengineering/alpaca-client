@@ -32,5 +32,3 @@ pub struct Account {
     pub trading_blocked: String,
     pub transfers_blocked: String
 }
-
-impl Account {}

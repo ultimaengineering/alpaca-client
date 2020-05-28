@@ -5,8 +5,6 @@ mod tests {
     use alpaca_client::order;
     use rust_decimal::prelude::*;
     use std::borrow::Borrow;
-    use chrono::{DateTime, Utc};
-    use std::io::empty;
 
     #[test]
     fn test_accounts_serialization() {
@@ -98,7 +96,7 @@ mod tests {
         }
         "#;
         let deserialized: order::Order = serde_json::from_str(&data).unwrap();
-        let optional_uuid = std::option::Option::Some(uuid::Uuid::from_str("904837e3-3b76-47ec-b432-046db621571b").unwrap().borrow());
+        let _optional_uuid = std::option::Option::Some(uuid::Uuid::from_str("904837e3-3b76-47ec-b432-046db621571b").unwrap().borrow());
         let uuid = uuid::Uuid::from_str("904837e3-3b76-47ec-b432-046db621571b").unwrap();
         assert_eq!(&deserialized.id, uuid.borrow());
         assert_eq!(&deserialized.client_order_id, uuid.borrow());
