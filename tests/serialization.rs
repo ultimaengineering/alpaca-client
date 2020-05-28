@@ -1,8 +1,8 @@
-extern crate alpaca_client;
+extern crate alpaca;
 #[cfg(test)]
 mod tests {
-    use alpaca_client::account;
-    use alpaca_client::order;
+    use alpaca::account;
+    use alpaca::order;
     use rust_decimal::prelude::*;
     use std::borrow::Borrow;
 
