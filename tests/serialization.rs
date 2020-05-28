@@ -117,7 +117,14 @@ mod tests {
     }
 
     #[test]
-    fn test_order_serialization() {
+    fn position_serialization() {
+        let data = r#" {
+
+        }"#;
+    }
+
+    #[test]
+    fn asset_serialization() {
         let data = r#" {
 
         }"#;
