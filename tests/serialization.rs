@@ -119,14 +119,48 @@ mod tests {
     #[test]
     fn position_serialization() {
         let data = r#" {
-
+          "asset_id": "904837e3-3b76-47ec-b432-046db621571b",
+          "symbol": "AAPL",
+          "exchange": "NASDAQ",
+          "asset_class": "us_equity",
+          "avg_entry_price": "100.0",
+          "qty": "5",
+          "side": "long",
+          "market_value": "600.0",
+          "cost_basis": "500.0",
+          "unrealized_pl": "100.0",
+          "unrealized_plpc": "0.20",
+          "unrealized_intraday_pl": "10.0",
+          "unrealized_intraday_plpc": "0.0084",
+          "current_price": "120.0",
+          "lastday_price": "119.0",
+          "change_today": "0.0084"
         }"#;
     }
 
     #[test]
     fn asset_serialization() {
         let data = r#" {
-
+          "id": "904837e3-3b76-47ec-b432-046db621571b",
+          "class": "us_equity",
+          "exchange": "NASDAQ",
+          "symbol": "AAPL",
+          "status": "active",
+          "tradable": true,
+          "marginable": true,
+          "shortable": true,
+          "easy_to_borrow": true
         }"#;
+    }
+
+    #[test]
+    fn calendar_serilaization() {
+        let data = r#"
+        {
+            "date": "2018-01-03",
+            "open": "09:30",
+            "close": "16:00"
+        }"#;
+
     }
 }
