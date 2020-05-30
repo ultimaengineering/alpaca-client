@@ -1,6 +1,8 @@
+use serde::{Serialize, Deserialize};
 
-pub struct asset {
-    pub id: UUID, //Asset ID.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Asset {
+    pub id: uuid::Uuid, //Asset ID.
     pub class: String, //“us_equity”
     pub exchange: String, //AMEX, ARCA, BATS, NYSE, NASDAQ or NYSEARCA
     pub symbol: String, //

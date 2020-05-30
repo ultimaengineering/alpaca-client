@@ -1,4 +1,6 @@
+use serde::{Serialize, Deserialize};
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AccountConfiguration {
     pub dtbp_check: String,
     pub no_shorting: bool,
