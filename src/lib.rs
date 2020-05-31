@@ -6,3 +6,4 @@ pub mod client;
 pub mod clock;
 pub mod order;
 pub mod position;
+pub mod auth;
