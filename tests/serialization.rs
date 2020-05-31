@@ -5,6 +5,8 @@ mod tests {
     use alpaca::order;
     use rust_decimal::prelude::*;
     use std::borrow::Borrow;
+    use alpaca::auth::Auth;
+    use alpaca::client::Client;
 
     #[test]
     fn accounts_serialization() {
@@ -162,5 +164,13 @@ mod tests {
             "close": "16:00"
         }"#;
 
+    }
+
+    #[test]
+    fn client_test() {
+        let client = Client::new(
+            "PK0B00349LFLYTD56116".parse().unwrap(),
+            "dqKgT3Q4wMytUoyp5SvcdLk1jIm/Hb7tVikK4qzH".parse().unwrap()
+        );
     }
 }
