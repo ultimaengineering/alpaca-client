@@ -11,6 +11,7 @@ tokio = { version = "0.2", features = ["full", "macros"] }
 rust_decimal = "1.6.0"
 uuid = { version = "0.8", features = ["serde", "v4"] }
 serde = "1.0.110"
+openssl = { version = "0.10", features = ["vendored"] }
 serde_json = "1.0.53"
 chrono = { version = "0.4", features = ["serde"] }
 reqwest = { version = "0.10.6", features = ["blocking", "json"] }

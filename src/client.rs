@@ -31,9 +31,11 @@ trait AuthError: Debug + Display {
         }
 
         pub fn login(auth: &Auth) -> Result<(), Box<dyn std::error::Error>> {
-            let client = reqwest::blocking::Client::new();
-            let mut res = client.get("https://paper-api.alpaca.markets/v2/account")
+            let _client = reqwest::blocking::Client::new();
+            let mut res = _client.get("https://paper-api.alpaca.markets/v2/account")
                 .header(USER_AGENT, "foo")
+                .header("APCA-API-KEY-ID", &auth.access_key)
+                .header("APCA-API-SECRET-KEY", &auth.secret_key)
                 .timeout(Duration::new(5, 0))
                 .send()?;
             println!("Status: {}", res.status());
