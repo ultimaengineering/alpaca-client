@@ -1,14 +1,11 @@
 use crate::auth::Auth;
 use std::fmt::{Debug, Display};
 use std::time::Duration;
-use reqwest::StatusCode;
 use reqwest::header::USER_AGENT;
 use crate::account::Account;
 use crate::client::AccountType::PAPER;
 use crate::client::AccountType::LIVE;
 use crate::account;
-use std::error::Error;
-use serde_json::{Map, Value};
 
 pub enum AccountType {
     PAPER,
@@ -44,28 +41,27 @@ trait AuthError: Debug + Display {
 
         pub fn login(auth: &Auth) -> Result<(), Box<dyn std::error::Error>> {
             let _client = reqwest::blocking::Client::new();
-            let mut res = _client.get("account")
+            let _res = _client.get("account")
                 .header(USER_AGENT, "foo")
                 .header("APCA-API-KEY-ID", &auth.access_key)
                 .header("APCA-API-SECRET-KEY", &auth.secret_key)
                 .timeout(Duration::new(5, 0))
                 .send()?;
-            println!("Status: {}", res.status());
-            println!("Headers:\n{:?}", res.headers());
-            // copy the response body directly to stdout
-            res.copy_to(&mut std::io::stdout())?;
-            println!("\n\nDone.");
             Ok(())
         }
 
-        pub fn get_account(&self) {
+        pub fn get_account(&self) -> Account {
             let _client = reqwest::blocking::Client::new();
             let mut url = Self::get_url(&self);
             url.push_str("account");
             let result: account::Account = _client.get(&url)
                 .header("APCA-API-KEY-ID", &self.auth.access_key)
-                .header("APCA-API-SECRET-KEY", &self.auth.secret_key).send().unwrap().json().unwrap();
-            println!("{:?}", result);
+                .header("APCA-API-SECRET-KEY", &self.auth.secret_key)
+                .send()
+                    .unwrap()
+                        .json()
+                            .unwrap();
+            return result;
         }
 
         pub fn get_url(&self) -> String {
