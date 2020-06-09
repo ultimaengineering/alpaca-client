@@ -31,7 +31,7 @@ mod tests {
           "portfolio_value": "103820.56",
           "regt_buying_power": "80680.36",
           "short_market_value": "0",
-          "shorting_enabled": "true",
+          "shorting_enabled": true,
           "sma": "0",
           "status": "ACTIVE",
           "trade_suspended_by_user": false,
@@ -54,7 +54,7 @@ mod tests {
         assert_eq!(&deserialized.long_market_value, Decimal::from_str("126960.76").unwrap().borrow());
         assert_eq!(&deserialized.maintenance_margin, Decimal::from_str("38088.228").unwrap().borrow());
         assert_eq!(&deserialized.multiplier, "4");
-        assert_eq!(&deserialized.pattern_day_trader, &false);
+        assert_eq!(&deserialized.pattern_day_trader, &true);
         assert_eq!(&deserialized.portfolio_value, Decimal::from_str("103820.56").unwrap().borrow());
         assert_eq!(&deserialized.regt_buying_power, Decimal::from_str("80680.36").unwrap().borrow());
         assert_eq!(&deserialized.short_market_value, Decimal::from_str("0").unwrap().borrow());
