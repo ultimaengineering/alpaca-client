@@ -1,8 +1,6 @@
 use crate::auth::Auth;
 use std::fmt::{Debug, Display};
 use std::time::Duration;
-use std::collections::HashMap;
-use std::error::Error;
 use reqwest::header::USER_AGENT;
 
 pub struct Client {

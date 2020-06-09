@@ -5,12 +5,11 @@ mod tests {
     use alpaca::order;
     use rust_decimal::prelude::*;
     use std::borrow::Borrow;
-    use alpaca::auth::Auth;
     use alpaca::client::Client;
 
     #[test]
     fn accounts_serialization() {
-        let data = r#"{
+        let _data = r#"{
           "account_blocked": "False",
           "account_number": "010203ABCD",
           "buying_power": "262113.632",
@@ -38,7 +37,7 @@ mod tests {
           "trading_blocked": "False",
           "transfers_blocked": "False"
         }"#;
-        let deserialized: account::Account = serde_json::from_str(&data).unwrap();
+        let deserialized: account::Account = serde_json::from_str(&_data).unwrap();
         assert_eq!(&deserialized.id, uuid::Uuid::from_str("e6fe16f3-64a4-4921-8928-cadf02f92f98").unwrap().borrow());
         assert_eq!(&deserialized.account_number, "010203ABCD");
         assert_eq!(&deserialized.buying_power, Decimal::from_str("262113.632").unwrap().borrow());
@@ -69,7 +68,7 @@ mod tests {
 
     #[test]
     fn order_serialization() {
-        let data = r#" {
+        let _data = r#" {
           "id": "904837e3-3b76-47ec-b432-046db621571b",
           "client_order_id": "904837e3-3b76-47ec-b432-046db621571b",
           "created_at": "2018-10-05T05:48:59Z",
@@ -98,7 +97,7 @@ mod tests {
           "legs": null
         }
         "#;
-        let deserialized: order::Order = serde_json::from_str(&data).unwrap();
+        let deserialized: order::Order = serde_json::from_str(&_data).unwrap();
         let _optional_uuid = std::option::Option::Some(uuid::Uuid::from_str("904837e3-3b76-47ec-b432-046db621571b").unwrap().borrow());
         let uuid = uuid::Uuid::from_str("904837e3-3b76-47ec-b432-046db621571b").unwrap();
         assert_eq!(&deserialized.id, uuid.borrow());
@@ -120,7 +119,7 @@ mod tests {
 
     #[test]
     fn position_serialization() {
-        let data = r#" {
+        let _data = r#" {
           "asset_id": "904837e3-3b76-47ec-b432-046db621571b",
           "symbol": "AAPL",
           "exchange": "NASDAQ",
@@ -142,7 +141,7 @@ mod tests {
 
     #[test]
     fn asset_serialization() {
-        let data = r#" {
+        let _data = r#" {
           "id": "904837e3-3b76-47ec-b432-046db621571b",
           "class": "us_equity",
           "exchange": "NASDAQ",
@@ -157,7 +156,7 @@ mod tests {
 
     #[test]
     fn calendar_serilaization() {
-        let data = r#"
+        let _data = r#"
         {
             "date": "2018-01-03",
             "open": "09:30",
@@ -168,7 +167,7 @@ mod tests {
 
     #[test]
     fn client_test() {
-        let client = Client::new(
+        let _client = Client::new(
             "PK0B00349LFLYTD56116".parse().unwrap(),
             "dqKgT3Q4wMytUoyp5SvcdLk1jIm/Hb7tVikK4qzH".parse().unwrap()
         );
