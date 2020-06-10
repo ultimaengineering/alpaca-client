@@ -8,10 +8,7 @@ mod tests {
     use alpaca::client::Client;
     use alpaca::client::AccountType::PAPER;
     use alpaca::order::{Order};
-    use chrono::{DateTime, Utc, TimeZone};
-    use std::ptr::{null, eq};
-    use serde_json::ser::State::Empty;
-    use serde_json::value::Value::Null;
+    use chrono::{Utc, TimeZone};
     use uuid::Uuid;
 
     #[test]
@@ -205,12 +202,12 @@ mod tests {
         let new_order = Order {
             id: Some(Uuid::new_v4()),
             client_order_id: Uuid::new_v4(),
-            created_at: Some(Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829)),
-            updated_at: Some(Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829)),
-            submitted_at: Some(Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829)),
-            filled_at: Some(Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829)),
-            expired_at: Some(Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829)),
-            canceled_at: Some(Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829)),
+            created_at: None,
+            updated_at:  None,
+            submitted_at:  None,
+            filled_at:  None,
+            expired_at:  None,
+            canceled_at:  None,
             failed_at: Some(Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829)),
             replaced_at: Some(Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829)),
             replaces: None,
