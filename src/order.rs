@@ -19,16 +19,16 @@ pub enum Time {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Order {
-    pub id: uuid::Uuid, //Order id
+    pub id: Option<uuid::Uuid>, //Order id
     pub client_order_id: uuid::Uuid, //Client unique order id
-    pub created_at: DateTime<Utc>,
-    pub updated_at: DateTime<Utc>,
-    pub submitted_at: DateTime<Utc>,
-    pub filled_at: DateTime<Utc>,
-    pub expired_at: DateTime<Utc>,
-    pub canceled_at: DateTime<Utc>,
-    pub failed_at: DateTime<Utc>,
-    pub replaced_at: DateTime<Utc>,
+    pub created_at: Option<DateTime<Utc>>,
+    pub updated_at: Option<DateTime<Utc>>,
+    pub submitted_at: Option<DateTime<Utc>>,
+    pub filled_at: Option<DateTime<Utc>>,
+    pub expired_at: Option<DateTime<Utc>>,
+    pub canceled_at: Option<DateTime<Utc>>,
+    pub failed_at: Option<DateTime<Utc>>,
+    pub replaced_at: Option<DateTime<Utc>>,
     pub replaces: Option<uuid::Uuid>,// The order ID that this order replaces
     pub asset_id: uuid::Uuid, // Asset ID
     pub symbol: String, // Asset symbol
@@ -39,9 +39,9 @@ pub struct Order {
     #[serde(rename = "type")]
     pub order_type: String,
     pub time_in_force: String, //https://alpaca.markets/docs/trading-on-alpaca/orders/#time-in-force
-    pub limit_price: Decimal, //Limit price
-    pub stop_price: Decimal, //Stop price
-    pub filled_avg_price: Decimal, //Filled average price
+    pub limit_price: Option<Decimal>, //Limit price
+    pub stop_price: Option<Decimal>, //Stop price
+    pub filled_avg_price: Option<Decimal>, //Filled average price
     pub status: String, //
     pub extended_hours: bool, //If true, eligible for execution outside regular trading hours.
     pub legs: Option<String> //When querying non-simple order_class orders in a nested style,

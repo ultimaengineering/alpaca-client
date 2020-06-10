@@ -107,18 +107,18 @@ mod tests {
         let deserialized: order::Order = serde_json::from_str(&_data).unwrap();
         let _optional_uuid = std::option::Option::Some(uuid::Uuid::from_str("904837e3-3b76-47ec-b432-046db621571b").unwrap().borrow());
         let uuid = uuid::Uuid::from_str("904837e3-3b76-47ec-b432-046db621571b").unwrap();
-        assert_eq!(&deserialized.id, uuid.borrow());
+        assert_eq!(&deserialized.id, &Some(uuid));
         assert_eq!(&deserialized.client_order_id, uuid.borrow());
         assert_eq!(&deserialized.asset_id, uuid.borrow());
         assert_eq!(&deserialized.asset_class, "us_equity");
         assert_eq!(&deserialized.symbol, "AAPL");
-        assert_eq!(&deserialized.limit_price, Decimal::from_str("107").unwrap().borrow());
+        assert_eq!(&deserialized.limit_price, &Some(Decimal::from_str("107").unwrap()));
         assert_eq!(&deserialized.qty, "15");
         assert_eq!(&deserialized.filled_qty, "0");
         assert_eq!(&deserialized.side, "buy");
         assert_eq!(&deserialized.time_in_force, "day");
-        assert_eq!(&deserialized.stop_price, Decimal::from_str("106").unwrap().borrow());
-        assert_eq!(&deserialized.filled_avg_price, Decimal::from_str("106").unwrap().borrow());
+        assert_eq!(&deserialized.stop_price, &Some(Decimal::from_str("106").unwrap()));
+        assert_eq!(&deserialized.filled_avg_price, &Some(Decimal::from_str("106").unwrap()));
         assert_eq!(&deserialized.status, "accepted");
         assert_eq!(&deserialized.extended_hours, &false);
         print!("{:?}", deserialized);
@@ -191,6 +191,7 @@ mod tests {
             PAPER
         );
         let x = _client.get_all_orders();
+        println!("{:?}", x);
     }
 
     #[test]
@@ -202,16 +203,16 @@ mod tests {
         );
 
         let new_order = Order {
-            id: Uuid::new_v4(),
+            id: Some(Uuid::new_v4()),
             client_order_id: Uuid::new_v4(),
-            created_at: Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829),
-            updated_at: Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829),
-            submitted_at: Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829),
-            filled_at: Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829),
-            expired_at: Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829),
-            canceled_at: Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829),
-            failed_at: Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829),
-            replaced_at: Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829),
+            created_at: Some(Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829)),
+            updated_at: Some(Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829)),
+            submitted_at: Some(Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829)),
+            filled_at: Some(Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829)),
+            expired_at: Some(Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829)),
+            canceled_at: Some(Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829)),
+            failed_at: Some(Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829)),
+            replaced_at: Some(Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829)),
             replaces: None,
             asset_id: Default::default(),
             symbol: "AMD".to_string(),
@@ -221,8 +222,8 @@ mod tests {
             side: "buy".to_string(),
             order_type: "stop_limit".parse().unwrap(),
             time_in_force: "day".to_string(),
-            limit_price: "1".parse().unwrap(),
-            stop_price: "1".parse().unwrap(),
+            limit_price: Some("1".parse().unwrap()),
+            stop_price: Some("1".parse().unwrap()),
             filled_avg_price: Default::default(),
             status: "".to_string(),
             extended_hours: false,
