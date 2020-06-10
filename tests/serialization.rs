@@ -9,7 +9,7 @@ mod tests {
     use alpaca::client::AccountType::PAPER;
     use alpaca::order::{Order};
     use chrono::{DateTime, Utc, TimeZone};
-    use std::ptr::null;
+    use std::ptr::{null, eq};
     use serde_json::ser::State::Empty;
     use serde_json::value::Value::Null;
     use uuid::Uuid;
@@ -230,7 +230,8 @@ mod tests {
             legs: None
         };
 
-        let x = _client.place_order(new_order);
+        let placed_order = _client.place_order(new_order);
+        assert_eq!(placed_order.status, "accepted");
     }
 
 }

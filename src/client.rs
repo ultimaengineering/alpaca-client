@@ -2,13 +2,11 @@ use crate::auth::Auth;
 use std::fmt::{Debug, Display};
 use std::time::Duration;
 use reqwest::header::USER_AGENT;
-use reqwest::Body;
 use crate::account::Account;
 use crate::client::AccountType::PAPER;
 use crate::client::AccountType::LIVE;
 use crate::account;
-use crate::order::{Order, Side, Time};
-use serde_json::Map;
+use crate::order::{Order};
 
 pub enum AccountType {
     PAPER,
@@ -82,12 +80,11 @@ trait AuthError: Debug + Display {
             return result;
         }
 
-        pub fn place_order(&self, _order: Order) {
+        pub fn place_order(&self, _order: Order) -> Order {
             let _client = reqwest::blocking::Client::new();
             let mut url = Self::get_url(&self);
             url.push_str("orders");
-            println!("{}", &serde_json::json!(&_order));
-            let result: serde_json::Value = _client.post(&url)
+            let _result: Order = _client.post(&url)
                 .header("APCA-API-KEY-ID", &self.auth.access_key)
                 .header("APCA-API-SECRET-KEY", &self.auth.secret_key)
                 .json(&serde_json::json!(&_order))
@@ -95,6 +92,7 @@ trait AuthError: Debug + Display {
                     .unwrap()
                         .json()
                             .unwrap();
+            return _result;
         }
 
         pub fn get_url(&self) -> String {
