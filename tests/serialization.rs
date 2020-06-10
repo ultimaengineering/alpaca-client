@@ -7,6 +7,12 @@ mod tests {
     use std::borrow::Borrow;
     use alpaca::client::Client;
     use alpaca::client::AccountType::PAPER;
+    use alpaca::order::{Order};
+    use chrono::{DateTime, Utc, TimeZone};
+    use std::ptr::null;
+    use serde_json::ser::State::Empty;
+    use serde_json::value::Value::Null;
+    use uuid::Uuid;
 
     #[test]
     fn accounts_serialization() {
@@ -175,4 +181,55 @@ mod tests {
         );
         _client.get_account();
     }
+
+
+    #[test]
+    fn client_get_orders_test() {
+        let _client = Client::new(
+            "PK0B00349LFLYTD56116".parse().unwrap(),
+            "dqKgT3Q4wMytUoyp5SvcdLk1jIm/Hb7tVikK4qzH".parse().unwrap(),
+            PAPER
+        );
+        let x = _client.get_all_orders();
+    }
+
+    #[test]
+    fn client_place_order_test() {
+        let _client = Client::new(
+            "PK0B00349LFLYTD56116".parse().unwrap(),
+            "dqKgT3Q4wMytUoyp5SvcdLk1jIm/Hb7tVikK4qzH".parse().unwrap(),
+            PAPER
+        );
+
+        let new_order = Order {
+            id: Uuid::new_v4(),
+            client_order_id: Uuid::new_v4(),
+            created_at: Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829),
+            updated_at: Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829),
+            submitted_at: Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829),
+            filled_at: Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829),
+            expired_at: Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829),
+            canceled_at: Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829),
+            failed_at: Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829),
+            replaced_at: Utc.ymd(2018, 1, 26).and_hms_micro(18, 30, 9, 453_829),
+            replaces: None,
+            asset_id: Default::default(),
+            symbol: "AMD".to_string(),
+            asset_class: "".to_string(),
+            qty: "1".to_string(),
+            filled_qty: "".to_string(),
+            side: "buy".to_string(),
+            order_type: "stop_limit".parse().unwrap(),
+            time_in_force: "day".to_string(),
+            limit_price: "1".parse().unwrap(),
+            stop_price: "1".parse().unwrap(),
+            filled_avg_price: Default::default(),
+            status: "".to_string(),
+            extended_hours: false,
+            legs: None
+        };
+
+        let x = _client.place_order(new_order);
+    }
+
 }

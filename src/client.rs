@@ -2,10 +2,13 @@ use crate::auth::Auth;
 use std::fmt::{Debug, Display};
 use std::time::Duration;
 use reqwest::header::USER_AGENT;
+use reqwest::Body;
 use crate::account::Account;
 use crate::client::AccountType::PAPER;
 use crate::client::AccountType::LIVE;
 use crate::account;
+use crate::order::{Order, Side, Time};
+use serde_json::Map;
 
 pub enum AccountType {
     PAPER,
@@ -62,6 +65,36 @@ trait AuthError: Debug + Display {
                         .json()
                             .unwrap();
             return result;
+        }
+
+        pub fn get_all_orders(&self) -> Vec<Order> {
+            let _client = reqwest::blocking::Client::new();
+            let mut url = Self::get_url(&self);
+            url.push_str("orders");
+
+            let result: Vec<Order> = _client.get(&url)
+                .header("APCA-API-KEY-ID", &self.auth.access_key)
+                .header("APCA-API-SECRET-KEY", &self.auth.secret_key)
+                .send()
+                    .unwrap()
+                        .json()
+                            .unwrap();
+            return result;
+        }
+
+        pub fn place_order(&self, _order: Order) {
+            let _client = reqwest::blocking::Client::new();
+            let mut url = Self::get_url(&self);
+            url.push_str("orders");
+            println!("{}", &serde_json::json!(&_order));
+            let result: serde_json::Value = _client.post(&url)
+                .header("APCA-API-KEY-ID", &self.auth.access_key)
+                .header("APCA-API-SECRET-KEY", &self.auth.secret_key)
+                .json(&serde_json::json!(&_order))
+                .send()
+                    .unwrap()
+                        .json()
+                            .unwrap();
         }
 
         pub fn get_url(&self) -> String {

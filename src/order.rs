@@ -2,6 +2,21 @@ use chrono::{DateTime, Utc};
 use rust_decimal::Decimal;
 use serde::{Serialize, Deserialize};
 
+
+pub enum Side {
+    BUY,
+    SELL,
+}
+
+pub enum Time {
+    DAY,
+    GTC,
+    OPG,
+    CLS,
+    IOC,
+    FOK,
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Order {
     pub id: uuid::Uuid, //Order id
@@ -21,6 +36,8 @@ pub struct Order {
     pub qty: String, // Ordered quantity
     pub filled_qty: String, // Filled quantity
     pub side: String, //Valid values: buy, sell
+    #[serde(rename = "type")]
+    pub order_type: String,
     pub time_in_force: String, //https://alpaca.markets/docs/trading-on-alpaca/orders/#time-in-force
     pub limit_price: Decimal, //Limit price
     pub stop_price: Decimal, //Stop price
