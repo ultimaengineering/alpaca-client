@@ -7,6 +7,7 @@ use crate::client::AccountType::PAPER;
 use crate::client::AccountType::LIVE;
 use crate::account;
 use crate::order::{Order};
+use uuid::Uuid;
 
 pub enum AccountType {
     PAPER,
@@ -88,6 +89,21 @@ trait AuthError: Debug + Display {
                 .header("APCA-API-KEY-ID", &self.auth.access_key)
                 .header("APCA-API-SECRET-KEY", &self.auth.secret_key)
                 .json(&serde_json::json!(&_order))
+                .send()
+                    .unwrap()
+                        .json()
+                            .unwrap();
+            return _result;
+        }
+
+        pub fn get_order(&self, id: Uuid) -> Order {
+            let _client = reqwest::blocking::Client::new();
+            let mut url = Self::get_url(&self);
+            url.push_str("orders/");
+            url.push_str(id.to_string().as_ref());
+            let _result: Order = _client.get(&url)
+                .header("APCA-API-KEY-ID", &self.auth.access_key)
+                .header("APCA-API-SECRET-KEY", &self.auth.secret_key)
                 .send()
                     .unwrap()
                         .json()

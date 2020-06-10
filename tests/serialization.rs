@@ -10,6 +10,8 @@ mod tests {
     use alpaca::order::{Order};
     use chrono::{Utc, TimeZone};
     use uuid::Uuid;
+    use reqwest::get;
+
 
     #[test]
     fn accounts_serialization() {
@@ -171,34 +173,32 @@ mod tests {
 
     #[test]
     fn client_test() {
-        let _client = Client::new(
-            "PK0B00349LFLYTD56116".parse().unwrap(),
-            "dqKgT3Q4wMytUoyp5SvcdLk1jIm/Hb7tVikK4qzH".parse().unwrap(),
-            PAPER
-        );
-        _client.get_account();
+        get_client().get_account();
     }
 
 
+    //While not containing an assert, still will fail due to runtime exception if miss-configured.
     #[test]
     fn client_get_orders_test() {
-        let _client = Client::new(
-            "PK0B00349LFLYTD56116".parse().unwrap(),
-            "dqKgT3Q4wMytUoyp5SvcdLk1jIm/Hb7tVikK4qzH".parse().unwrap(),
-            PAPER
-        );
-        let x = _client.get_all_orders();
-        println!("{:?}", x);
+        let x = get_client().get_all_orders();
+        println!("{:?}", &x);
+    }
+
+    #[test]
+    fn client_get_order_test() {
+        let mut orders = get_client().get_all_orders();
+        let mut num_orders = &orders.iter().count();
+        if num_orders.clone() == 0 {
+            client_place_order_test();
+            orders = get_client().get_all_orders();
+            num_orders = &orders.iter().count();
+        }
+        let old_order = orders.get(0).unwrap();
+        let newly_retrieve_order = get_client().get_order(old_order.id.unwrap());
     }
 
     #[test]
     fn client_place_order_test() {
-        let _client = Client::new(
-            "PK0B00349LFLYTD56116".parse().unwrap(),
-            "dqKgT3Q4wMytUoyp5SvcdLk1jIm/Hb7tVikK4qzH".parse().unwrap(),
-            PAPER
-        );
-
         let new_order = Order {
             id: Some(Uuid::new_v4()),
             client_order_id: Uuid::new_v4(),
@@ -227,8 +227,24 @@ mod tests {
             legs: None
         };
 
-        let placed_order = _client.place_order(new_order);
+        let placed_order = get_client().place_order(new_order);
         assert_eq!(placed_order.status, "accepted");
+    }
+
+    fn get_access_key() -> String {
+        return "PK0B00349LFLYTD56116".parse().unwrap();
+    }
+
+    fn get_secret_key() -> String {
+        return "dqKgT3Q4wMytUoyp5SvcdLk1jIm/Hb7tVikK4qzH".parse().unwrap();
+    }
+
+    fn get_client() -> Client {
+        return Client::new(
+            get_access_key(),
+            get_secret_key(),
+            PAPER
+        );
     }
 
 }
