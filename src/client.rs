@@ -27,29 +27,11 @@ trait AuthError: Debug + Display {
     impl Client {
         pub fn new(access: String, secret: String, account_type: AccountType) -> Client {
             let auth = Auth {access_key: access, secret_key: secret};
-            let successful_login = Self::login(&auth);
-
-            match successful_login {
-                Ok(l) => println!("{:?}", l),
-                Err(e) => println!("{:?}", e)
-            }
-
             let client = Client {
                 auth,
                 account_type
             };
             return client;
-        }
-
-        pub fn login(auth: &Auth) -> Result<(), Box<dyn std::error::Error>> {
-            let _client = reqwest::blocking::Client::new();
-            let _res = _client.get("account")
-                .header(USER_AGENT, "foo")
-                .header("APCA-API-KEY-ID", &auth.access_key)
-                .header("APCA-API-SECRET-KEY", &auth.secret_key)
-                .timeout(Duration::new(5, 0))
-                .send()?;
-            Ok(())
         }
 
         pub fn get_account(&self) -> Account {

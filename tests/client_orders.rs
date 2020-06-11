@@ -29,15 +29,11 @@ mod tests {
 
     #[test]
     fn client_get_order_test() {
-        let mut orders = get_client().get_all_orders();
+        let client = get_client();
+        let mut orders = &client.get_all_orders();
         let mut num_orders = &orders.iter().count();
-        if num_orders.clone() == 0 {
-            client_place_order_test();
-            orders = get_client().get_all_orders();
-            num_orders = &orders.iter().count();
-        }
         let old_order = orders.get(0).unwrap();
-        let newly_retrieve_order = get_client().get_order(old_order.id.unwrap());
+        let newly_retrieve_order = &client.get_order(old_order.id.unwrap());
     }
 
     #[test]
