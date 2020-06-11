@@ -93,6 +93,33 @@ trait AuthError: Debug + Display {
             return _result;
         }
 
+        pub fn replace_order(&self, _order: Order) -> Order {
+            let _client = reqwest::blocking::Client::new();
+            let mut url = Self::get_url(&self);
+            url.push_str("orders");
+            let _result: Order = _client.patch(&url)
+                .header("APCA-API-KEY-ID", &self.auth.access_key)
+                .header("APCA-API-SECRET-KEY", &self.auth.secret_key)
+                .json(&serde_json::json!(&_order))
+                .send()
+                    .unwrap()
+                        .json()
+                            .unwrap();
+            return _result;
+        }
+
+        pub fn cancel_order(&self, id: Uuid) {
+            let _client = reqwest::blocking::Client::new();
+            let mut url = Self::get_url(&self);
+            url.push_str("orders/");
+            url.push_str(id.to_string().as_ref());
+            _client.delete(&url)
+                .header("APCA-API-KEY-ID", &self.auth.access_key)
+                .header("APCA-API-SECRET-KEY", &self.auth.secret_key)
+                    .send()
+                        .unwrap();
+        }
+
         pub fn get_url(&self) -> String {
             match &self.account_type {
                 PAPER => "https://paper-api.alpaca.markets/v2/".to_owned(),
