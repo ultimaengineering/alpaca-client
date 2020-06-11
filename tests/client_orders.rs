@@ -2,16 +2,10 @@
 extern crate alpaca;
 #[cfg(test)]
 mod tests {
-    use alpaca::account;
-    use alpaca::order;
-    use rust_decimal::prelude::*;
-    use std::borrow::Borrow;
     use alpaca::client::Client;
     use alpaca::client::AccountType::PAPER;
     use alpaca::order::{Order};
-    use chrono::{Utc, TimeZone};
     use uuid::Uuid;
-    use reqwest::get;
 
 
 
@@ -22,22 +16,21 @@ mod tests {
 
     //While not containing an assert, still will fail due to runtime exception if miss-configured.
     #[test]
-    fn client_get_orders_test() {
+    fn get_orders_test() {
         let x = get_client().get_all_orders();
         println!("{:?}", &x);
     }
 
     #[test]
-    fn client_get_order_test() {
+    fn get_order_test() {
         let client = get_client();
-        let mut orders = &client.get_all_orders();
-        let mut num_orders = &orders.iter().count();
+        let orders = &client.get_all_orders();
         let old_order = orders.get(0).unwrap();
-        let newly_retrieve_order = &client.get_order(old_order.id.unwrap());
+        let _newly_retrieve_order = &client.get_order(old_order.id.unwrap());
     }
 
     #[test]
-    fn client_place_order_test() {
+    fn place_order_test() {
         let new_order = Order {
             id: Some(Uuid::new_v4()),
             client_order_id: Uuid::new_v4(),
@@ -71,7 +64,7 @@ mod tests {
     }
 
     #[test]
-    fn client_cancel_order_test() {
+    fn cancel_order_test() {
         let new_order = Order {
             id: Some(Uuid::new_v4()),
             client_order_id: Uuid::new_v4(),
@@ -105,7 +98,7 @@ mod tests {
     }
 
     #[test]
-    fn client_patch_order_test() {
+    fn patch_order_test() {
         let mut new_order = Order {
             id: Some(Uuid::new_v4()),
             client_order_id: Uuid::new_v4(),

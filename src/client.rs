@@ -1,7 +1,5 @@
 use crate::auth::Auth;
 use std::fmt::{Debug, Display};
-use std::time::Duration;
-use reqwest::header::USER_AGENT;
 use crate::account::Account;
 use crate::client::AccountType::PAPER;
 use crate::client::AccountType::LIVE;
@@ -34,6 +32,7 @@ trait AuthError: Debug + Display {
             return client;
         }
 
+
         pub fn get_account(&self) -> Account {
             let _client = reqwest::blocking::Client::new();
             let mut url = Self::get_url(&self);
@@ -62,7 +61,6 @@ trait AuthError: Debug + Display {
                             .unwrap();
             return result;
         }
-
         pub fn place_order(&self, _order: Order) -> Order {
             let _client = reqwest::blocking::Client::new();
             let mut url = Self::get_url(&self);
@@ -77,7 +75,6 @@ trait AuthError: Debug + Display {
                             .unwrap();
             return _result;
         }
-
         pub fn get_order(&self, id: Uuid) -> Order {
             let _client = reqwest::blocking::Client::new();
             let mut url = Self::get_url(&self);
@@ -92,7 +89,6 @@ trait AuthError: Debug + Display {
                             .unwrap();
             return _result;
         }
-
         pub fn replace_order(&self, _order: Order) -> Order {
             let _client = reqwest::blocking::Client::new();
             let mut url = Self::get_url(&self);
@@ -107,7 +103,6 @@ trait AuthError: Debug + Display {
                             .unwrap();
             return _result;
         }
-
         pub fn cancel_order(&self, id: Uuid) {
             let _client = reqwest::blocking::Client::new();
             let mut url = Self::get_url(&self);
@@ -119,6 +114,8 @@ trait AuthError: Debug + Display {
                     .send()
                         .unwrap();
         }
+
+
 
         pub fn get_url(&self) -> String {
             match &self.account_type {

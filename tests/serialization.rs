@@ -5,12 +5,6 @@ mod tests {
     use alpaca::order;
     use rust_decimal::prelude::*;
     use std::borrow::Borrow;
-    use alpaca::client::Client;
-    use alpaca::client::AccountType::PAPER;
-    use alpaca::order::{Order};
-    use chrono::{Utc, TimeZone};
-    use uuid::Uuid;
-    use reqwest::get;
 
 
     #[test]
