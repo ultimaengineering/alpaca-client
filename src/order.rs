@@ -1,6 +1,8 @@
 use chrono::{DateTime, Utc};
 use rust_decimal::Decimal;
 use serde::{Serialize, Deserialize};
+use crate::client::Client;
+use uuid::Uuid;
 
 
 pub enum Side {
@@ -46,4 +48,79 @@ pub struct Order {
     pub extended_hours: bool, //If true, eligible for execution outside regular trading hours.
     pub legs: Option<String> //When querying non-simple order_class orders in a nested style,
     // an array of Order entities associated with this order. Otherwise, null.
+}
+
+impl Order {
+    pub fn get_all(client: &Client) -> Vec<Order> {
+        let _client = reqwest::blocking::Client::new();
+        let mut url = client.get_url();
+        url.push_str("orders");
+
+        let result: Vec<Order> = _client.get(&url)
+            .header("APCA-API-KEY-ID", &client.auth.access_key)
+            .header("APCA-API-SECRET-KEY", &client.auth.secret_key)
+            .send()
+            .unwrap()
+            .json()
+            .unwrap();
+        return result;
+    }
+
+    pub fn place(client: &Client, _order: Order) -> Order {
+        let _client = reqwest::blocking::Client::new();
+        let mut url = client.get_url();
+        url.push_str("orders");
+        let _result: Order = _client.post(&url)
+            .header("APCA-API-KEY-ID", &client.auth.access_key)
+            .header("APCA-API-SECRET-KEY", &client.auth.secret_key)
+            .json(&serde_json::json!(&_order))
+            .send()
+            .unwrap()
+            .json()
+            .unwrap();
+        return _result;
+    }
+
+    pub fn get(client: &Client, id: Uuid) -> Order {
+        let _client = reqwest::blocking::Client::new();
+        let mut url = client.get_url();
+        url.push_str("orders/");
+        url.push_str(id.to_string().as_ref());
+        let _result: Order = _client.get(&url)
+            .header("APCA-API-KEY-ID", &client.auth.access_key)
+            .header("APCA-API-SECRET-KEY", &client.auth.secret_key)
+            .send()
+            .unwrap()
+            .json()
+            .unwrap();
+        return _result;
+    }
+
+    pub fn replace(client: &Client, _order: Order) -> Order {
+        let _client = reqwest::blocking::Client::new();
+        let mut url = client.get_url();
+        url.push_str("orders");
+        let _result: Order = _client.patch(&url)
+            .header("APCA-API-KEY-ID", &client.auth.access_key)
+            .header("APCA-API-SECRET-KEY", &client.auth.secret_key)
+            .json(&serde_json::json!(&_order))
+            .send()
+            .unwrap()
+            .json()
+            .unwrap();
+        return _result;
+    }
+
+    pub fn cancel(client: &Client,  id: Uuid) {
+        let _client = reqwest::blocking::Client::new();
+        let mut url = client.get_url();
+        url.push_str("orders/");
+        url.push_str(id.to_string().as_ref());
+        _client.delete(&url)
+            .header("APCA-API-KEY-ID", &client.auth.access_key)
+            .header("APCA-API-SECRET-KEY", &client.auth.secret_key)
+            .send()
+            .unwrap();
+    }
+
 }

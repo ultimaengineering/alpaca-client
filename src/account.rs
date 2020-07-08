@@ -1,6 +1,7 @@
 use chrono::{DateTime, Utc};
 use rust_decimal::Decimal;
 use serde::{Serialize, Deserialize};
+use crate::client::Client;
 
 // https://alpaca.markets/docs/api-documentation/api-v2/account/
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -38,4 +39,20 @@ pub struct Account {
     pub trade_suspended_by_user: bool, //User setting. If true, the account is not allowed to place orders.
     pub trading_blocked: bool, //If true, the account is not allowed to place orders.
     pub transfers_blocked: bool //If true, the account is not allowed to request money transfers.
+}
+
+impl Account {
+    pub fn get_account(client: &Client) -> Account {
+        let _client = reqwest::blocking::Client::new();
+        let mut url = client.get_url();
+        url.push_str("account");
+        let result: Account = _client.get(&url)
+            .header("APCA-API-KEY-ID", &client.auth.access_key)
+            .header("APCA-API-SECRET-KEY", &client.auth.secret_key)
+            .send()
+            .unwrap()
+            .json()
+            .unwrap();
+        return result;
+}
 }

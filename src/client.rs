@@ -3,7 +3,6 @@ use std::fmt::{Debug, Display};
 use crate::account::Account;
 use crate::client::AccountType::PAPER;
 use crate::client::AccountType::LIVE;
-use crate::account;
 use crate::order::{Order};
 use uuid::Uuid;
 
@@ -33,86 +32,23 @@ trait AuthError: Debug + Display {
         }
 
 
-        pub fn get_account(&self) -> Account {
-            let _client = reqwest::blocking::Client::new();
-            let mut url = Self::get_url(&self);
-            url.push_str("account");
-            let result: account::Account = _client.get(&url)
-                .header("APCA-API-KEY-ID", &self.auth.access_key)
-                .header("APCA-API-SECRET-KEY", &self.auth.secret_key)
-                .send()
-                    .unwrap()
-                        .json()
-                            .unwrap();
-            return result;
-        }
+        pub fn get_account(&self) -> Account { return Account::get_account(&self); }
 
-        pub fn get_all_orders(&self) -> Vec<Order> {
-            let _client = reqwest::blocking::Client::new();
-            let mut url = Self::get_url(&self);
-            url.push_str("orders");
+        pub fn get_all_orders(&self) -> Vec<Order> { return Order::get_all(&self) }
 
-            let result: Vec<Order> = _client.get(&url)
-                .header("APCA-API-KEY-ID", &self.auth.access_key)
-                .header("APCA-API-SECRET-KEY", &self.auth.secret_key)
-                .send()
-                    .unwrap()
-                        .json()
-                            .unwrap();
-            return result;
-        }
         pub fn place_order(&self, _order: Order) -> Order {
-            let _client = reqwest::blocking::Client::new();
-            let mut url = Self::get_url(&self);
-            url.push_str("orders");
-            let _result: Order = _client.post(&url)
-                .header("APCA-API-KEY-ID", &self.auth.access_key)
-                .header("APCA-API-SECRET-KEY", &self.auth.secret_key)
-                .json(&serde_json::json!(&_order))
-                .send()
-                    .unwrap()
-                        .json()
-                            .unwrap();
-            return _result;
+            return Order::place(&self, _order);
         }
-        pub fn get_order(&self, id: Uuid) -> Order {
-            let _client = reqwest::blocking::Client::new();
-            let mut url = Self::get_url(&self);
-            url.push_str("orders/");
-            url.push_str(id.to_string().as_ref());
-            let _result: Order = _client.get(&url)
-                .header("APCA-API-KEY-ID", &self.auth.access_key)
-                .header("APCA-API-SECRET-KEY", &self.auth.secret_key)
-                .send()
-                    .unwrap()
-                        .json()
-                            .unwrap();
-            return _result;
-        }
+
+        pub fn get_order(&self, id: Uuid) -> Order { return Order::get(&self, id); }
+
+
         pub fn replace_order(&self, _order: Order) -> Order {
-            let _client = reqwest::blocking::Client::new();
-            let mut url = Self::get_url(&self);
-            url.push_str("orders");
-            let _result: Order = _client.patch(&url)
-                .header("APCA-API-KEY-ID", &self.auth.access_key)
-                .header("APCA-API-SECRET-KEY", &self.auth.secret_key)
-                .json(&serde_json::json!(&_order))
-                .send()
-                    .unwrap()
-                        .json()
-                            .unwrap();
-            return _result;
+            return Order::replace(&self, _order);
         }
+
         pub fn cancel_order(&self, id: Uuid) {
-            let _client = reqwest::blocking::Client::new();
-            let mut url = Self::get_url(&self);
-            url.push_str("orders/");
-            url.push_str(id.to_string().as_ref());
-            _client.delete(&url)
-                .header("APCA-API-KEY-ID", &self.auth.access_key)
-                .header("APCA-API-SECRET-KEY", &self.auth.secret_key)
-                    .send()
-                        .unwrap();
+            return Order::cancel(&self, id);
         }
 
 
