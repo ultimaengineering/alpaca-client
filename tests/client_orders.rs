@@ -6,7 +6,8 @@ mod tests {
     use alpaca::client::AccountType::PAPER;
     use alpaca::order::{Order};
     use uuid::Uuid;
-
+    use std::env;
+    use std::process::exit;
 
 
     #[test]
@@ -158,11 +159,17 @@ mod tests {
     }
 
     fn get_access_key() -> String {
-        return "PK0B00349LFLYTD56116".parse().unwrap();
+        return match env::var("alpaca_access_key") {
+            Ok(key) => return key,
+            Err(e) => exit(-1),
+        };
     }
 
     fn get_secret_key() -> String {
-        return "dqKgT3Q4wMytUoyp5SvcdLk1jIm/Hb7tVikK4qzH".parse().unwrap();
+        return match env::var("alpaca_secret_key") {
+            Ok(key) => return key,
+            Err(e) => exit(-1),
+        };
     }
 
     fn get_client() -> Client {
