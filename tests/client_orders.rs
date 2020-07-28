@@ -160,15 +160,15 @@ mod tests {
 
     fn get_access_key() -> String {
         return match env::var("alpaca_access_key") {
-            Ok(key) => return key,
-            Err(e) => exit(-1),
+            Ok(key) => key,
+            Err(_e) => exit(-1),
         };
     }
 
     fn get_secret_key() -> String {
         return match env::var("alpaca_secret_key") {
-            Ok(key) => return key,
-            Err(e) => exit(-1),
+            Ok(key) => key,
+            Err(_e) => exit(-1),
         };
     }
 
