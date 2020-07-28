@@ -123,4 +123,15 @@ impl Order {
             .unwrap();
     }
 
+    pub fn cancel_all(client: &Client) {
+        let _client = reqwest::blocking::Client::new();
+        let mut url = client.get_url();
+        url.push_str("orders");
+        _client.delete(&url)
+            .header("APCA-API-KEY-ID", &client.auth.access_key)
+            .header("APCA-API-SECRET-KEY", &client.auth.secret_key)
+            .send()
+            .unwrap();
+    }
+
 }

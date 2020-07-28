@@ -51,6 +51,9 @@ trait AuthError: Debug + Display {
             return Order::cancel(&self, id);
         }
 
+        pub fn cancel_all_ordres(&self) {
+            Order::cancel_all(&self);
+        }
 
 
         pub fn get_url(&self) -> String {
