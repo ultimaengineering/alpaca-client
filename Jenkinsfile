@@ -13,11 +13,11 @@ spec:
     tty: true
 """
   ) {
-  environment {
-        alpaca_access_key = credentials('alpaca_access_key')
-        alpaca_secret_key = credentials('alpaca_secret_key')
-    }
   node(POD_LABEL) {
+    environment {
+            alpaca_access_key = credentials('alpaca_access_key')
+            alpaca_secret_key = credentials('alpaca_secret_key')
+        }
     stage('Build and test') {
     checkout scm
       container('rust') {
