@@ -17,11 +17,32 @@ pub struct Asset {
 
 impl Asset {
 
-    pub fn get_assets(client: &Client) -> Vec<Asset> {
-
+    pub fn get_all(client: &Client) -> Vec<Asset> {
+        let _client = reqwest::blocking::Client::new();
+        let mut url = client.get_url();
+        url.push_str("assets");
+        let _result: Vec<Asset> = _client.get(&url)
+            .header("APCA-API-KEY-ID", &client.auth.access_key)
+            .header("APCA-API-SECRET-KEY", &client.auth.secret_key)
+            .send()
+            .unwrap()
+            .json()
+            .unwrap();
+        return _result;
     }
 
-    pub fn get_asset(client: &Client, symbol: String) -> Asset {
-
+    pub fn get(client: &Client, symbol: String) -> Asset {
+        let _client = reqwest::blocking::Client::new();
+        let mut url = client.get_url();
+        url.push_str("assets/");
+        url.push_str(symbol.to_string().as_ref());
+        let _result: Asset = _client.get(&url)
+            .header("APCA-API-KEY-ID", &client.auth.access_key)
+            .header("APCA-API-SECRET-KEY", &client.auth.secret_key)
+            .send()
+            .unwrap()
+            .json()
+            .unwrap();
+        return _result;
     }
 }

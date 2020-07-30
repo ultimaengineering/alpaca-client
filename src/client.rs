@@ -59,43 +59,43 @@ trait AuthError: Debug + Display {
         }
 
         pub fn get_open_positions(&self) -> Vec<Position> {
-            return Position::get_positions(&self);
+            return Position::get_all(&self);
         }
 
         pub fn get_open_position(&self, symbol: String) -> Position {
-            return Position::get_position(&self, symbol);
+            return Position::get(&self, symbol);
         }
 
         pub fn close_all_positions(&self) {
-            Position::close_all_positions(&self);
+            Position::close_all(&self);
         }
 
         pub fn close_position(&self, symbol: String) {
-            Position::close_position(&self, symbol);
+            Position::close(&self, symbol);
         }
 
         pub fn get_clock(&self) -> Clock {
-            return Clock::get_clock(&self);
+            return Clock::get(&self);
         }
 
         pub fn get_calender(&self) -> Calendar {
-            return Calendar::get_calender(&self);
+            return Calendar::get(&self);
         }
 
         pub fn get_assets(&self) -> Vec<Asset> {
-            return Asset::get_assets(&self)
+            return Asset::get_all(&self)
         }
 
         pub fn get_asset(&self, symbol: String) -> Asset {
-            return Asset::get_asset(&self, symbol);
+            return Asset::get(&self, symbol);
         }
 
         pub fn get_account_configuration(&self) -> AccountConfiguration {
-            return AccountConfiguration::get_account_configurations(&self)
+            return AccountConfiguration::get(&self)
         }
 
         pub fn update_account_configuration(&self, account: AccountConfiguration) -> AccountConfiguration {
-            return AccountConfiguration::update_account_configurations(&self, account);
+            return AccountConfiguration::update(&self, account);
         }
 
         pub fn get_url(&self) -> String {

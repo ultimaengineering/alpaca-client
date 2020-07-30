@@ -24,20 +24,56 @@ pub struct Position {
 
 impl Position {
 
-    pub fn get_positions(client: &Client) -> Vec<Position> {
+    pub fn get_all(client: &Client) -> Vec<Position> {
+        let _client = reqwest::blocking::Client::new();
+        let mut url = client.get_url();
+        url.push_str("positions");
 
+        let result: Vec<Position> = _client.get(&url)
+            .header("APCA-API-KEY-ID", &client.auth.access_key)
+            .header("APCA-API-SECRET-KEY", &client.auth.secret_key)
+            .send()
+            .unwrap()
+            .json()
+            .unwrap();
+        return result;
     }
 
-    pub fn get_position(client: &Client, symbol: String) -> Position {
-
+    pub fn get(client: &Client, symbol: String) -> Position {
+        let _client = reqwest::blocking::Client::new();
+        let mut url = client.get_url();
+        url.push_str("positions/");
+        url.push_str(symbol.to_string().as_ref());
+        let _result: Position = _client.get(&url)
+            .header("APCA-API-KEY-ID", &client.auth.access_key)
+            .header("APCA-API-SECRET-KEY", &client.auth.secret_key)
+            .send()
+            .unwrap()
+            .json()
+            .unwrap();
+        return _result;
     }
 
-    pub fn close_all_positions(client: &Client) {
-
+    pub fn close_all(client: &Client) {
+        let _client = reqwest::blocking::Client::new();
+        let mut url = client.get_url();
+        url.push_str("positions");
+        _client.delete(&url)
+            .header("APCA-API-KEY-ID", &client.auth.access_key)
+            .header("APCA-API-SECRET-KEY", &client.auth.secret_key)
+            .send()
+            .unwrap();
     }
 
-    pub fn close_position(client: &Client, symbol: String) {
-
+    pub fn close(client: &Client, symbol: String) {
+        let _client = reqwest::blocking::Client::new();
+        let mut url = client.get_url();
+        url.push_str("positions/");
+        url.push_str(symbol.to_string().as_ref());
+        _client.delete(&url)
+            .header("APCA-API-KEY-ID", &client.auth.access_key)
+            .header("APCA-API-SECRET-KEY", &client.auth.secret_key)
+            .send()
+            .unwrap();
     }
-
 }

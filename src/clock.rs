@@ -11,7 +11,17 @@ pub struct Clock {
 }
 
 impl Clock {
-    pub fn get_clock(client: &Client) -> Clock {
-
+    pub fn get(client: &Client) -> Clock {
+        let _client = reqwest::blocking::Client::new();
+        let mut url = client.get_url();
+        url.push_str("clock");
+        let _result: Clock = _client.get(&url)
+            .header("APCA-API-KEY-ID", &client.auth.access_key)
+            .header("APCA-API-SECRET-KEY", &client.auth.secret_key)
+            .send()
+            .unwrap()
+            .json()
+            .unwrap();
+        return _result;
     }
 }
