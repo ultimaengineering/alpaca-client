@@ -5,6 +5,11 @@ use crate::client::AccountType::PAPER;
 use crate::client::AccountType::LIVE;
 use crate::order::{Order};
 use uuid::Uuid;
+use crate::position::Position;
+use crate::clock::Clock;
+use crate::calendar::Calendar;
+use crate::asset::Asset;
+use crate::account_configuration::AccountConfiguration;
 
 pub enum AccountType {
     PAPER,
@@ -31,7 +36,6 @@ trait AuthError: Debug + Display {
             return client;
         }
 
-
         pub fn get_account(&self) -> Account { return Account::get_account(&self); }
 
         pub fn get_all_orders(&self) -> Vec<Order> { return Order::get_all(&self) }
@@ -42,7 +46,6 @@ trait AuthError: Debug + Display {
 
         pub fn get_order(&self, id: Uuid) -> Order { return Order::get(&self, id); }
 
-
         pub fn replace_order(&self, _order: Order) -> Order {
             return Order::replace(&self, _order);
         }
@@ -51,10 +54,49 @@ trait AuthError: Debug + Display {
             return Order::cancel(&self, id);
         }
 
-        pub fn cancel_all_ordres(&self) {
+        pub fn cancel_all_orders(&self) {
             Order::cancel_all(&self);
         }
 
+        pub fn get_open_positions(&self) -> Vec<Position> {
+            return Position::get_positions(&self);
+        }
+
+        pub fn get_open_position(&self, symbol: String) -> Position {
+            return Position::get_position(&self, symbol);
+        }
+
+        pub fn close_all_positions(&self) {
+            Position::close_all_positions(&self);
+        }
+
+        pub fn close_position(&self, symbol: String) {
+            Position::close_position(&self, symbol);
+        }
+
+        pub fn get_clock(&self) -> Clock {
+            return Clock::get_clock(&self);
+        }
+
+        pub fn get_calender(&self) -> Calendar {
+            return Calendar::get_calender(&self);
+        }
+
+        pub fn get_assets(&self) -> Vec<Asset> {
+            return Asset::get_assets(&self)
+        }
+
+        pub fn get_asset(&self, symbol: String) -> Asset {
+            return Asset::get_asset(&self, symbol);
+        }
+
+        pub fn get_account_configuration(&self) -> AccountConfiguration {
+            return AccountConfiguration::get_account_configurations(&self)
+        }
+
+        pub fn update_account_configuration(&self, account: AccountConfiguration) -> AccountConfiguration {
+            return AccountConfiguration::update_account_configurations(&self, account);
+        }
 
         pub fn get_url(&self) -> String {
             match &self.account_type {

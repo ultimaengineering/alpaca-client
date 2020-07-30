@@ -1,5 +1,6 @@
 use rust_decimal::Decimal;
 use serde::{Serialize, Deserialize};
+use crate::client::Client;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Position {
@@ -19,4 +20,24 @@ pub struct Position {
     pub current_price: Decimal, //Current asset price per share
     pub lastday_price: Decimal, //Last day’s asset price per share based on the closing value of the last trading day
     pub change_today: Decimal //Percent change from last day price (by a factor of 1)
+}
+
+impl Position {
+
+    pub fn get_positions(client: &Client) -> Vec<Position> {
+
+    }
+
+    pub fn get_position(client: &Client, symbol: String) -> Position {
+
+    }
+
+    pub fn close_all_positions(client: &Client) {
+
+    }
+
+    pub fn close_position(client: &Client, symbol: String) {
+
+    }
+
 }

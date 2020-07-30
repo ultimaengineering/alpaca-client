@@ -1,4 +1,5 @@
 use serde::{Serialize, Deserialize};
+use crate::client::Client;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Asset {
@@ -12,4 +13,15 @@ pub struct Asset {
     pub shortable: bool, //Asset is shortable or not.
     pub easy_to_borrow: bool //Asset is easy-to-borrow or not (filtering for easy_to_borrow = True
     // is the best way to check whether the name is currently available to short at Alpaca).
+}
+
+impl Asset {
+
+    pub fn get_assets(client: &Client) -> Vec<Asset> {
+
+    }
+
+    pub fn get_asset(client: &Client, symbol: String) -> Asset {
+
+    }
 }
