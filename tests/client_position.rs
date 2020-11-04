@@ -11,7 +11,7 @@ mod tests {
     use uuid::Uuid;
     use alpaca::position::Position;
 
-    #[test]
+   // #[test]
     pub fn get_open_positions() {
         let client = get_client();
         let new_order = Order {
@@ -48,7 +48,7 @@ mod tests {
         assert!(result, true)
     }
 
-    #[test]
+   // #[test]
     pub fn get_open_position() {
         let client = get_client();
         let new_order = Order {
@@ -86,7 +86,7 @@ mod tests {
         assert!(result, true)
     }
 
-    #[test]
+  //  #[test]
     pub fn close_all_positions() {
         let client = get_client();
         let new_order = Order {
@@ -126,7 +126,7 @@ mod tests {
         assert!(client.get_open_positions().len() == 0)
     }
 
-    #[test]
+  //  #[test]
     pub fn close_position() {
         let client = get_client();
         let new_order = Order {
