@@ -11,7 +11,7 @@ mod tests {
     use uuid::Uuid;
     use alpaca::position::Position;
 
-    #[test]
+   // #[test]
     pub fn get_open_positions() {
         let client = get_client();
         let new_order = Order {
