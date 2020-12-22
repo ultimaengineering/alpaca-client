@@ -8,6 +8,7 @@ mod tests {
     use uuid::Uuid;
     use std::env;
     use std::process::exit;
+    use alpaca::bar::{BarRequest, TimeFrame};
 
 
     #[test]
@@ -160,7 +161,17 @@ mod tests {
 
     #[test]
     fn get_bar() {
-        //get_client().get_bar();
+        let request = BarRequest {
+            time_frame: TimeFrame::OneMinute,
+            symbols: "AMD".to_string(),
+            limit: 0,
+            start: None,
+            end: None,
+            after: None,
+            until: None
+        };
+        let bar = get_client().get_bar(request);
+        println!("{:?}", bar);
     }
 
 
