@@ -158,6 +158,12 @@ mod tests {
         assert_eq!(placed_order.id, new_order.id);
     }
 
+    #[test]
+    fn get_bar() {
+        //get_client().get_bar();
+    }
+
+
     fn get_access_key() -> String {
         return match env::var("alpaca_access_key") {
             Ok(key) => key,
