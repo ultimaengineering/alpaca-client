@@ -9,3 +9,4 @@ pub mod position;
 pub mod auth;
 pub mod bar;
 pub mod last_trade;
+pub mod last_quote;
