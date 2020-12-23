@@ -8,7 +8,7 @@ mod tests {
     use uuid::Uuid;
     use std::env;
     use std::process::exit;
-    use alpaca::bar::{BarRequest, TimeFrame};
+    use alpaca::bar::{BarRequest, TimeFrame, Bar};
 
 
     #[test]
@@ -170,8 +170,12 @@ mod tests {
             after: None,
             until: None
         };
-        let bar = get_client().get_bar(request);
-        println!("{:?}", bar);
+        let results = get_client().get_bar(request);
+        let keys = results.keys();
+        assert_eq!(keys.len(), 1);
+        let bars: &Vec<Bar> = results.get("AMD").unwrap();
+        let num_bars = bars.iter().len();
+        assert_eq!(num_bars, 100);
     }
 
 

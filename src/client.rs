@@ -12,7 +12,7 @@ use crate::asset::Asset;
 use crate::account_configuration::AccountConfiguration;
 use crate::bar::Bar;
 use crate::bar::BarRequest;
-
+use std::collections::HashMap;
 
 
 pub enum AccountType {
@@ -102,7 +102,7 @@ trait AuthError: Debug + Display {
             return AccountConfiguration::update(&self, account);
         }
 
-        pub fn get_bar(&self, bar_request: BarRequest) -> Bar {
+        pub fn get_bar(&self, bar_request: BarRequest) -> HashMap<String, Vec<Bar>> {
             return Bar::get_bar(&self, bar_request);
         }
 

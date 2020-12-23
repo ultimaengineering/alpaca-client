@@ -100,6 +100,7 @@ impl Order {
         let _client = reqwest::blocking::Client::new();
         let mut url = client.get_url();
         url.push_str("orders");
+        println!("{:?}", _order);
         let _result: Order = _client.patch(&url)
             .header("APCA-API-KEY-ID", &client.auth.access_key)
             .header("APCA-API-SECRET-KEY", &client.auth.secret_key)
