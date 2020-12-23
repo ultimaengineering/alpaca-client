@@ -8,6 +8,7 @@ mod tests {
     use uuid::Uuid;
     use std::env;
     use std::process::exit;
+    use alpaca::bar::{BarRequest, TimeFrame, Bar};
 
 
     #[test]
@@ -157,6 +158,26 @@ mod tests {
         };
         assert_eq!(placed_order.id, new_order.id);
     }
+
+    #[test]
+    fn get_bar() {
+        let request = BarRequest {
+            time_frame: TimeFrame::OneMinute,
+            symbols: "AMD".to_string(),
+            limit: 0,
+            start: None,
+            end: None,
+            after: None,
+            until: None
+        };
+        let results = get_client().get_bar(request);
+        let keys = results.keys();
+        assert_eq!(keys.len(), 1);
+        let bars: &Vec<Bar> = results.get("AMD").unwrap();
+        let num_bars = bars.iter().len();
+        assert_eq!(num_bars, 100);
+    }
+
 
     fn get_access_key() -> String {
         return match env::var("alpaca_access_key") {

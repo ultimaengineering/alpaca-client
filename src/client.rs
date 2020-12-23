@@ -10,6 +10,10 @@ use crate::clock::Clock;
 use crate::calendar::Calendar;
 use crate::asset::Asset;
 use crate::account_configuration::AccountConfiguration;
+use crate::bar::Bar;
+use crate::bar::BarRequest;
+use std::collections::HashMap;
+
 
 pub enum AccountType {
     PAPER,
@@ -96,6 +100,10 @@ trait AuthError: Debug + Display {
 
         pub fn update_account_configuration(&self, account: AccountConfiguration) -> AccountConfiguration {
             return AccountConfiguration::update(&self, account);
+        }
+
+        pub fn get_bar(&self, bar_request: BarRequest) -> HashMap<String, Vec<Bar>> {
+            return Bar::get_bar(&self, bar_request);
         }
 
         pub fn get_url(&self) -> String {

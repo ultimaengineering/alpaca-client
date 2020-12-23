@@ -7,3 +7,4 @@ pub mod clock;
 pub mod order;
 pub mod position;
 pub mod auth;
+pub mod bar;
