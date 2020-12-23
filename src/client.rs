@@ -15,6 +15,7 @@ use crate::bar::BarRequest;
 use std::collections::HashMap;
 use crate::last_trade::LastStockTrade;
 use crate::last_trade::Last;
+use crate::last_quote::LastQuote;
 
 
 pub enum AccountType {
@@ -110,6 +111,10 @@ trait AuthError: Debug + Display {
 
         pub fn get_last_trade(&self, symbol: String) -> LastStockTrade {
             return Last::get(&self, symbol);
+        }
+
+        pub fn get_last_quote(&self,symbol: String) -> LastQuote {
+            return LastQuote::get(&self, symbol);
         }
 
         pub fn get_url(&self) -> String {

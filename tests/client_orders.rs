@@ -186,6 +186,13 @@ mod tests {
         assert_ne!(status, "");
     }
 
+    #[test]
+    fn get_last_quote() {
+        let results = get_client().get_last_quote("AMD".to_owned());
+        let status = results.status;
+        assert_ne!(status, "");
+    }
+
 
     fn get_access_key() -> String {
         return match env::var("alpaca_access_key") {
