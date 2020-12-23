@@ -9,6 +9,7 @@ mod tests {
     use std::env;
     use std::process::exit;
     use alpaca::bar::{BarRequest, TimeFrame, Bar};
+    use std::ptr::null;
 
 
     #[test]
@@ -176,6 +177,13 @@ mod tests {
         let bars: &Vec<Bar> = results.get("AMD").unwrap();
         let num_bars = bars.iter().len();
         assert_eq!(num_bars, 100);
+    }
+
+    #[test]
+    fn get_last_trade() {
+        let results = get_client().get_last_trade("AMD".to_owned());
+        let status = results.status;
+        assert_ne!(status, "");
     }
 
 
