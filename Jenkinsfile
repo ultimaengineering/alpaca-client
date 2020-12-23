@@ -13,6 +13,7 @@ spec:
     tty: true
 """
   ) {
+  def win32BuildBadge = addEmbeddableBadgeConfiguration(id: "win32build", subject: "Windows Build")
   node(POD_LABEL) {
     withCredentials([string(credentialsId: 'alpaca_secret_key', variable: 'alpaca_secret_key')]) {
       withCredentials([string(credentialsId: 'alpaca_access_key', variable: 'alpaca_access_key')]) {
@@ -21,6 +22,7 @@ spec:
           container('rust') {
             sh 'cargo test'
             sh 'cargo build --release'
+            win32BuildBadge.setStatus('passing')
           }
         }
       }
