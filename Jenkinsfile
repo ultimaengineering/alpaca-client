@@ -12,7 +12,7 @@ spec:
     - cat
     tty: true
 """
-  ) {
+  )
   pipeline {
     agent none
     stages {
@@ -31,4 +31,3 @@ spec:
       }
     }
   }
-}
