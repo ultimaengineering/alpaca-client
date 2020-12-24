@@ -1,10 +1,10 @@
-extern crate alpaca;
+extern crate alpaca_client;
 
 #[cfg(test)]
 mod tests {
     use std::env;
-    use alpaca::client::Client;
-    use alpaca::client::AccountType::PAPER;
+    use alpaca_client::client::Client;
+    use alpaca_client::client::AccountType::PAPER;
     use std::process::exit;
     use std::borrow::Borrow;
     use alpaca::order::Order;
