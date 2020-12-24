@@ -1,3 +1,4 @@
+booleanParam('RUN_TESTS', true, 'uncheck to disable tests')
 podTemplate(yaml: """
 apiVersion: v1
 kind: Pod
