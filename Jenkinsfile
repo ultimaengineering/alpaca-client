@@ -16,7 +16,7 @@ spec:
 pipeline {
   agent none
   stages {
-    stage {
+    stage("test and build") {
       withCredentials([string(credentialsId: 'alpaca_secret_key', variable: 'alpaca_secret_key')]) {
         withCredentials([string(credentialsId: 'alpaca_access_key', variable: 'alpaca_access_key')]) {
           stage('Build and test') {
