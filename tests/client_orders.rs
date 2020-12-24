@@ -10,7 +10,6 @@ mod tests {
     use std::env;
     use std::process::exit;
     use alpaca_client::bar::{BarRequest, TimeFrame, Bar};
-    use std::ptr::null;
 
 
     #[test]

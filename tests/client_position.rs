@@ -7,9 +7,9 @@ mod tests {
     use alpaca_client::client::AccountType::PAPER;
     use std::process::exit;
     use std::borrow::Borrow;
-    use alpaca::order::Order;
+    use alpaca_client::order::Order;
     use uuid::Uuid;
-    use alpaca::position::Position;
+    use alpaca_client::position::Position;
 
    //#[test]
     pub fn get_open_positions() {
