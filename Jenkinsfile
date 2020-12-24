@@ -13,16 +13,19 @@ spec:
     tty: true
 """
   ) {
-  parameters {
-          booleanParam(name: 'RELEASE_SOLID', defaultValue: false, description: 'removes -SNAPSHOT, releases solid version to nexus and commits new SNAPSHOT version to GHE') }
-  node(POD_LABEL) {
-    withCredentials([string(credentialsId: 'alpaca_secret_key', variable: 'alpaca_secret_key')]) {
-      withCredentials([string(credentialsId: 'alpaca_access_key', variable: 'alpaca_access_key')]) {
-        stage('Build and test') {
-          checkout scm
-          container('rust') {
-            sh 'cargo test'
-            sh 'cargo build --release'
+  pipeline {
+    agent none
+    stages {
+      stage {
+        withCredentials([string(credentialsId: 'alpaca_secret_key', variable: 'alpaca_secret_key')]) {
+          withCredentials([string(credentialsId: 'alpaca_access_key', variable: 'alpaca_access_key')]) {
+            stage('Build and test') {
+              checkout scm
+              container('rust') {
+                sh 'cargo test'
+                sh 'cargo build --release'
+              }
+            }
           }
         }
       }
