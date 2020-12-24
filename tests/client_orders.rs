@@ -1,14 +1,15 @@
 
-extern crate alpaca;
+extern crate alpaca_client;
+
 #[cfg(test)]
 mod tests {
-    use alpaca::client::Client;
-    use alpaca::client::AccountType::PAPER;
-    use alpaca::order::{Order};
+    use alpaca_client::client::Client;
+    use alpaca_client::client::AccountType::PAPER;
+    use alpaca_client::order::{Order};
     use uuid::Uuid;
     use std::env;
     use std::process::exit;
-    use alpaca::bar::{BarRequest, TimeFrame, Bar};
+    use alpaca_client::bar::{BarRequest, TimeFrame, Bar};
     use std::ptr::null;
 
 
