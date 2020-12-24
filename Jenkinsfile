@@ -1,4 +1,3 @@
-booleanParam('RUN_TESTS', true, 'uncheck to disable tests')
 podTemplate(yaml: """
 apiVersion: v1
 kind: Pod
@@ -14,6 +13,8 @@ spec:
     tty: true
 """
   ) {
+  parameters {
+          booleanParam(name: 'RELEASE_SOLID', defaultValue: false, description: 'removes -SNAPSHOT, releases solid version to nexus and commits new SNAPSHOT version to GHE') }
   node(POD_LABEL) {
     withCredentials([string(credentialsId: 'alpaca_secret_key', variable: 'alpaca_secret_key')]) {
       withCredentials([string(credentialsId: 'alpaca_access_key', variable: 'alpaca_access_key')]) {
