@@ -3,6 +3,7 @@ podTemplate(containers: [
   ]) {
     node(POD_LABEL) {
         stage('build and test') {
+        checkout scm
             container('rust') {
                 stage('build') {
                     sh 'cargo build --release'
