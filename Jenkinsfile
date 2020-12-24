@@ -17,12 +17,14 @@ pipeline {
   agent none
   stages {
     stage("test and build") {
-      withCredentials([string(credentialsId: 'alpaca_secret_key', variable: 'alpaca_secret_key')]) {
-        withCredentials([string(credentialsId: 'alpaca_access_key', variable: 'alpaca_access_key')]) {
+      steps {
+        withCredentials([string(credentialsId: 'alpaca_secret_key', variable: 'alpaca_secret_key')]) {
+          withCredentials([string(credentialsId: 'alpaca_access_key', variable: 'alpaca_access_key')]) {
             checkout scm
             container('rust') {
               sh 'cargo test'
               sh 'cargo build --release'
+            }
           }
         }
       }
