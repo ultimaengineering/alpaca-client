@@ -23,7 +23,6 @@ pipeline {
     }
     stage('Test') {
       steps {
-        step {
           withCredentials([string(credentialsId: 'alpaca_secret_key', variable: 'alpaca_secret_key')]) {
             withCredentials([string(credentialsId: 'alpaca_access_key', variable: 'alpaca_access_key')]) {
               checkout scm
@@ -31,14 +30,13 @@ pipeline {
                 sh 'cargo test'
                 sh 'cargo build --release'
               }
-            }
           }
         }
       }
     }
     stage('Deploy') {
       steps {
-        //
+        sh "echo hello"
       }
     }
   }
