@@ -14,9 +14,14 @@ spec:
 """
   )
 pipeline {
-  agent none
+  agent any
   stages {
-    stage("test and build") {
+    stage('Build') {
+      steps {
+        sh 'cargo build --release'
+      }
+    }
+    stage('Test') {
       steps {
         withCredentials([string(credentialsId: 'alpaca_secret_key', variable: 'alpaca_secret_key')]) {
           withCredentials([string(credentialsId: 'alpaca_access_key', variable: 'alpaca_access_key')]) {
@@ -27,6 +32,11 @@ pipeline {
             }
           }
         }
+      }
+    }
+    stage('Deploy') {
+      steps {
+        //
       }
     }
   }
