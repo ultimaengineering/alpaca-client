@@ -1,5 +1,5 @@
 [package]
-name = "alpaca"
+name = "alpaca-client"
 version = "0.1.0"
 authors = ["Alexander Montgomery <alexandermontgomery95@gmail.com>"]
 edition = "2018"
