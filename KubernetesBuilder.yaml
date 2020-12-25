@@ -6,7 +6,7 @@ metadata:
 spec:
   containers:
     - name: rust
-      image: rust:1.47-buster
+      image: rust:1.48-buster
       command:
         - cat
       tty: true
