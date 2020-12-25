@@ -21,5 +21,18 @@ pipeline {
         }
       }
     }
+    stage('Release') {
+      when {
+        expression {
+          params.RELEASE_SOLID == true
+        }
+      }
+      steps {
+        withCredentials([string(credentialsId: 'cargo_login_token', variable: '	cargo_login_token')]) {
+          sh 'cargo login ${cargo_login_token}'
+          sh 'cargo publish'
+        }
+      }
+    }
   }
 }
