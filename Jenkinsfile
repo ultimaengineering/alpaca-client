@@ -1,10 +1,13 @@
-podTemplate(containers: [
-containerTemplate(name: 'rust', image: 'rust:1.47-buster', ttyEnabled: true, command: 'cat'),
-]) {
-parameters {
-          booleanParam(name: 'RELEASE_SOLID', defaultValue: false, description: 'removes -SNAPSHOT, releases solid version to nexus and commits new SNAPSHOT version to GHE')
-      }
-  node(POD_LABEL) {
+pipeline {
+  parameters {
+    booleanParam(name: 'RELEASE_SOLID', defaultValue: false, description: 'release solid version.')
+  }
+  agent {
+    kubernetes {
+      yamlFile 'KubernetesPod.yaml'
+    }
+  }
+  stages {
     stage('build and test') {
       checkout scm
       container('rust') {
