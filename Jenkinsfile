@@ -1,6 +1,10 @@
 podTemplate(containers: [
-containerTemplate(name: 'rust', image: 'rust:1.47-buster', ttyEnabled: true, command: 'cat'), ]) {
+containerTemplate(name: 'rust', image: 'rust:1.47-buster', ttyEnabled: true, command: 'cat'),
+]) {
   node(POD_LABEL) {
+  parameters {
+          booleanParam(name: 'RELEASE_SOLID', defaultValue: false, description: 'removes -SNAPSHOT, releases solid version to nexus and commits new SNAPSHOT version to GHE')
+      }
     stage('build and test') {
       checkout scm
       container('rust') {
