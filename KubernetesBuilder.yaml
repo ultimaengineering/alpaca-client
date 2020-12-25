@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    some-label: builder
+spec:
+  containers:
+    - name: rust
+      image: rust:1.47-buster
+      command:
+        - cat
+      tty: true

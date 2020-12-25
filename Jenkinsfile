@@ -1,26 +1,37 @@
-podTemplate(yaml: """
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    some-label: builder
-spec:
-  containers:
-  - name: rust
-    image: rust:1.47-buster
-    command:
-    - cat
-    tty: true
-"""
-  ) {
-  node(POD_LABEL) {
-    withCredentials([string(credentialsId: 'alpaca_secret_key', variable: 'alpaca_secret_key')]) {
-      withCredentials([string(credentialsId: 'alpaca_access_key', variable: 'alpaca_access_key')]) {
-        stage('Build and test') {
-          checkout scm
-          container('rust') {
-            sh 'cargo test'
-            sh 'cargo build --release'
+pipeline {
+  parameters {
+    booleanParam(name: 'RELEASE_SOLID', defaultValue: false, description: 'release solid version.')
+  }
+  agent {
+    kubernetes {
+      yamlFile 'KubernetesBuilder.yaml'
+    }
+  }
+  stages {
+    stage('build and test') {
+      steps {
+        checkout scm
+        container('rust') {
+          sh 'cargo build --release'
+          withCredentials([string(credentialsId: 'alpaca_secret_key', variable: 'alpaca_secret_key')]) {
+            withCredentials([string(credentialsId: 'alpaca_access_key', variable: 'alpaca_access_key')]) {
+              sh 'cargo test'
+            }
+          }
+        }
+      }
+    }
+    stage('Release') {
+      when {
+        expression {
+          params.RELEASE_SOLID == true
+        }
+      }
+      steps {
+      container('rust') {
+          withCredentials([string(credentialsId: 'cargo_login_token', variable: '	cargo_login_token')]) {
+            sh 'cargo login ${cargo_login_token}'
+            sh 'cargo publish'
           }
         }
       }
