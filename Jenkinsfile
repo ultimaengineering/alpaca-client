@@ -8,7 +8,7 @@ pipeline {
     }
   }
   stages {
-    stage('build and test') {
+    stage('build') {
       steps {
         checkout scm
         container('rust') {
