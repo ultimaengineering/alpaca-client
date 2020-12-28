@@ -16,7 +16,10 @@ pipeline {
           sh 'cargo build'
           withCredentials([string(credentialsId: 'alpaca_secret_key', variable: 'alpaca_secret_key')]) {
             withCredentials([string(credentialsId: 'alpaca_access_key', variable: 'alpaca_access_key')]) {
+            withCredentials([string(credentialsId: 'coveralls_alpaca_client', variable: 'coveralls_alpaca_client')]) {
               sh 'cargo test'
+              sh 'cargo tarpaulin --coveralls ${coveralls_alpaca_client}'
+              }
             }
           }
         }
