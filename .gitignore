@@ -2,3 +2,5 @@
 Cargo.lock
 *.iml
 /.idea
+/cobertura.xml
+/tarpaulin-report.html
