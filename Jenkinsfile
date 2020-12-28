@@ -12,7 +12,7 @@ pipeline {
       steps {
         checkout scm
         container('rust') {
-          sh 'cargo build --release'
+          sh 'cargo build --with-coverage --release'
           withCredentials([string(credentialsId: 'alpaca_secret_key', variable: 'alpaca_secret_key')]) {
             withCredentials([string(credentialsId: 'alpaca_access_key', variable: 'alpaca_access_key')]) {
               sh 'cargo test'
