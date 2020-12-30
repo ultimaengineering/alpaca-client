@@ -8,7 +8,7 @@ pipeline {
     }
   }
   stages {
-    stage('build') {
+    stage('Build') {
       steps {
         checkout scm
         container('rust') {
@@ -16,7 +16,7 @@ pipeline {
         }
       }
     }
-    stage('test') {
+    stage('Test') {
       steps {
         checkout scm
         container('rust') {
