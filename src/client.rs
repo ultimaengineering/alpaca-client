@@ -85,7 +85,7 @@ trait AuthError: Debug + Display {
             return Clock::get(&self);
         }
 
-        pub fn get_calender(&self) -> Calendar {
+        pub fn get_calender(&self) -> Vec<Calendar> {
             return Calendar::get(&self);
         }
 

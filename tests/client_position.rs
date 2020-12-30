@@ -12,7 +12,7 @@ mod tests {
     use uuid::Uuid;
     use alpaca_client::position::Position;
 
-   //#[test]
+   #[test]
     pub fn get_open_positions() {
         let client = get_client();
         let new_order = Order {
@@ -42,11 +42,7 @@ mod tests {
             extended_hours: false,
             legs: None
         };
-        &client.place_order(new_order.clone());
         let positions:Vec<Position> = client.get_open_positions();
-        let result = positions.into_iter()
-            .any(|x| x.symbol.eq(&new_order.borrow().symbol));
-        assert!(result, true)
     }
 
     //#[test]
