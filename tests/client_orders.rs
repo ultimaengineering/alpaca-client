@@ -1,7 +1,6 @@
 
 extern crate alpaca_client;
 
-#[feature(core)]
 #[cfg(test)]
 mod tests {
     use alpaca_client::client::Client;

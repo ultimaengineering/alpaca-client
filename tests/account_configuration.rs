@@ -6,10 +6,6 @@ mod tests {
     use alpaca_client::client::Client;
     use alpaca_client::client::AccountType::PAPER;
     use std::process::exit;
-    use std::borrow::Borrow;
-    use alpaca_client::order::Order;
-    use uuid::Uuid;
-    use alpaca_client::position::Position;
 
     #[test]
     pub fn get_account_configuration() {

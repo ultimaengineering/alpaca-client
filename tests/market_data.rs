@@ -6,7 +6,6 @@ mod tests {
     use alpaca_client::client::Client;
     use alpaca_client::client::AccountType::PAPER;
     use std::process::exit;
-    use uuid::Uuid;
 
     #[test]
     pub fn get_last_quote() {

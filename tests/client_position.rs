@@ -1,6 +1,5 @@
 extern crate alpaca_client;
 
-#[feature(core)]
 #[cfg(test)]
 mod tests {
     use std::env;
@@ -15,33 +14,6 @@ mod tests {
    #[test]
     pub fn get_open_positions() {
         let client = get_client();
-        let new_order = Order {
-            id: Some(Uuid::new_v4()),
-            client_order_id: Uuid::new_v4(),
-            created_at: None,
-            updated_at:  None,
-            submitted_at:  None,
-            filled_at:  None,
-            expired_at:  None,
-            canceled_at:  None,
-            failed_at: None,
-            replaced_at: None,
-            replaces: None,
-            asset_id: Default::default(),
-            symbol: "NVDA".to_string(),
-            asset_class: "".to_string(),
-            qty: "100".to_string(),
-            filled_qty: "".to_string(),
-            side: "buy".to_string(),
-            order_type: "stop_limit".parse().unwrap(),
-            time_in_force: "day".to_string(),
-            limit_price: Some("1000".parse().unwrap()),
-            stop_price: Some("1".parse().unwrap()),
-            filled_avg_price: Default::default(),
-            status: "".to_string(),
-            extended_hours: false,
-            legs: None
-        };
         let positions:Vec<Position> = client.get_open_positions();
     }
 
